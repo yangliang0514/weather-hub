@@ -1,25 +1,24 @@
-import { fetchCitiesSearch } from "@/api/acccuweather";
+import { useState } from "react";
+import useDebounce from "@/hooks/useDebounce";
+import SearchResults from "./SearchResults";
 import MagnifyingGlass from "@/icons/MagnifyingGlass";
-import { useSuspenseQuery } from "@tanstack/react-query";
-import { Suspense, useState } from "react";
 
 export default function SearchInput() {
-  const [search, setSearch] = useState("");
-
-  const { data: results } = useSuspenseQuery({
-    queryKey: ["search-results"],
-    queryFn: () => fetchCitiesSearch(search),
-  });
+  const [quertString, setQuertString] = useState("");
+  const [isFocused, setIsFocused] = useState(false);
+  const debouncedQuery = useDebounce(quertString, 1000);
 
   return (
-    <div className="flex">
-      <form className="relative" action="">
+    <div className="relative">
+      <form>
         <input
-          className="rounded-full border-opacity-30 bg-slate-400 bg-transparent bg-opacity-30 px-3 py-2 placeholder:text-center placeholder:text-sm placeholder:text-white focus:outline-none focus:ring-1 focus:ring-white"
+          className="rounded-full border border-opacity-30 bg-slate-400 bg-transparent bg-opacity-30 px-3 py-2 placeholder:text-center placeholder:text-sm placeholder:text-white focus:outline-none focus:ring-1 focus:ring-white"
           type="text"
           placeholder="搜尋城市"
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
+          value={quertString}
+          onFocus={() => setIsFocused(true)}
+          onBlur={() => setIsFocused(false)}
+          onChange={(e) => setQuertString(e.target.value)}
         />
         <button
           type="submit"
@@ -28,11 +27,9 @@ export default function SearchInput() {
           <MagnifyingGlass />
         </button>
       </form>
-      {/* <Suspense fallback={<div>Loading</div>}>
-        {results.map((result) => (
-          <div key={result.key}>{result.LocalizedName}</div>
-        ))}
-      </Suspense> */}
+      {isFocused && debouncedQuery && (
+        <SearchResults queryStr={debouncedQuery} />
+      )}
     </div>
   );
 }

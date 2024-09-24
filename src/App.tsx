@@ -4,7 +4,7 @@ import { Outlet } from "react-router-dom";
 import NavBar from "./components/NavBar";
 
 const queryClient = new QueryClient({
-  defaultOptions: { queries: { staleTime: 60 * 1000 } },
+  defaultOptions: { queries: { staleTime: 60 * 1000, retry: false } },
 });
 export default function App() {
   return (
