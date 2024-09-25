@@ -1,4 +1,5 @@
 import { fetchCitiesSearch } from "@/api/acccuweather";
+import { storeRecentSearches } from "@/utils/localStorage";
 import { useQuery } from "@tanstack/react-query";
 import { Link } from "react-router-dom";
 
@@ -22,12 +23,18 @@ export default function SearchResults({ queryStr }: { queryStr: string }) {
       {isLoading ? (
         <li className="bg-white p-3">Loading...</li>
       ) : (
-        data?.map(({ key, city, parentCity, country }) => (
-          <li key={key} className="space-y-1 bg-white p-3 hover:bg-gray-300">
-            <Link to={`/${key}/overview`}>
-              <span className="block text-lg font-semibold">{city}</span>
+        data?.map((search) => (
+          <li
+            key={search.key}
+            className="space-y-1 bg-white p-3 hover:bg-gray-300"
+          >
+            <Link
+              to={`/${search.key}/overview`}
+              onClick={() => storeRecentSearches(search)}
+            >
+              <span className="block text-lg font-semibold">{search.city}</span>
               <span className="block text-sm">
-                {city}, {parentCity}, {country}
+                {search.city}, {search.parentCity}, {search.country}
               </span>
             </Link>
           </li>
