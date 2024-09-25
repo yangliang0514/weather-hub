@@ -2,7 +2,7 @@ import axios from "axios";
 
 const domain = import.meta.env.VITE_ACCUWEATHER_DOMAIN;
 
-interface citiesInfo {
+export interface citiesInfo {
   key: string;
   city: string;
   parentCity: string;

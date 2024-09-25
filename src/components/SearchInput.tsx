@@ -6,13 +6,18 @@ import MagnifyingGlass from "@/icons/MagnifyingGlass";
 export default function SearchInput() {
   const [quertString, setQuertString] = useState("");
   const [isFocused, setIsFocused] = useState(false);
-  const debouncedQuery = useDebounce(quertString, 1000);
+  const [debouncedQuery, setDebounceQuery] = useDebounce(quertString, 1000);
 
   return (
     <div className="relative">
-      <form>
+      <form
+        onSubmit={(e) => {
+          e.preventDefault();
+          setDebounceQuery(quertString);
+        }}
+      >
         <input
-          className="rounded-full border border-opacity-30 bg-slate-400 bg-transparent bg-opacity-30 px-3 py-2 placeholder:text-center placeholder:text-sm placeholder:text-white focus:outline-none focus:ring-1 focus:ring-white"
+          className="w-full rounded-full border border-opacity-30 bg-slate-400 bg-transparent bg-opacity-30 px-3 py-2 placeholder:text-center placeholder:text-sm placeholder:text-white focus:outline-none focus:ring-1 focus:ring-white"
           type="text"
           placeholder="搜尋城市"
           value={quertString}
