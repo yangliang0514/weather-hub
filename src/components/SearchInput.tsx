@@ -1,15 +1,29 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import useDebounce from "@/hooks/useDebounce";
 import SearchResults from "./SearchResults";
 import MagnifyingGlass from "@/icons/MagnifyingGlass";
 
 export default function SearchInput() {
   const [quertString, setQuertString] = useState("");
-  const [isFocused, setIsFocused] = useState(false);
-  const [debouncedQuery, setDebounceQuery] = useDebounce(quertString, 1000);
+  const [displayResults, setDisplayResults] = useState(false);
+  const [debouncedQuery, setDebounceQuery] = useDebounce(quertString, 500);
+
+  const ref = useRef<HTMLDivElement | null>(null);
+
+  function handleClickOutside(e: MouseEvent) {
+    if (ref.current && !ref.current.contains(e.target as Node)) {
+      setDisplayResults(false);
+    }
+  }
+
+  useEffect(() => {
+    document.addEventListener("click", handleClickOutside);
+
+    return () => document.removeEventListener("click", handleClickOutside);
+  }, []);
 
   return (
-    <div className="relative">
+    <div className="relative" ref={ref}>
       <form
         onSubmit={(e) => {
           e.preventDefault();
@@ -21,8 +35,7 @@ export default function SearchInput() {
           type="text"
           placeholder="搜尋城市"
           value={quertString}
-          onFocus={() => setIsFocused(true)}
-          onBlur={() => setIsFocused(false)}
+          onFocus={() => setDisplayResults(true)}
           onChange={(e) => setQuertString(e.target.value)}
         />
         <button
@@ -32,7 +45,7 @@ export default function SearchInput() {
           <MagnifyingGlass />
         </button>
       </form>
-      {isFocused && debouncedQuery && (
+      {displayResults && debouncedQuery && (
         <SearchResults queryStr={debouncedQuery} />
       )}
     </div>

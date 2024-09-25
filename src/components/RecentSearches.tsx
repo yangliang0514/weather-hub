@@ -19,7 +19,7 @@ export default function RecentSearches() {
         return (
           <Link to={`${search.key}/overview`} className="block">
             <div key={search.key} className="grid grid-cols-3">
-              <div className="rounded-lg bg-gray-600 bg-opacity-50 p-6 text-white">
+              <div className="rounded-lg bg-gray-600 bg-opacity-50 p-6 text-white hover:bg-opacity-65">
                 <div className="text-lg font-bold">{search.city}</div>
                 <div className="text-sm text-gray-300">{search.country}</div>
               </div>
