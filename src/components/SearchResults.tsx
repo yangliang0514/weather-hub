@@ -3,7 +3,15 @@ import { storeRecentSearches } from "@/utils/localStorage";
 import { useQuery } from "@tanstack/react-query";
 import { Link } from "react-router-dom";
 
-export default function SearchResults({ queryStr }: { queryStr: string }) {
+export default function SearchResults({
+  queryStr,
+  hideResults,
+  clearInput,
+}: {
+  queryStr: string;
+  hideResults: () => void;
+  clearInput: () => void;
+}) {
   const { data, isLoading, isError, error } = useQuery({
     queryKey: ["text-searches", queryStr],
     queryFn: () => fetchCitiesSearch(queryStr),
@@ -29,8 +37,12 @@ export default function SearchResults({ queryStr }: { queryStr: string }) {
             className="space-y-1 bg-white p-3 hover:bg-gray-300"
           >
             <Link
-              to={`/${search.key}/overview`}
-              onClick={() => storeRecentSearches(search)}
+              to={`/${search.key}/today`}
+              onClick={() => {
+                storeRecentSearches(search);
+                hideResults();
+                clearInput();
+              }}
             >
               <span className="block text-lg font-semibold">{search.city}</span>
               <span className="block text-sm">

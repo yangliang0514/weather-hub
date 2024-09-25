@@ -21,7 +21,7 @@ export default function RecentSearches() {
           return (
             <Link
               key={search.key}
-              to={`${search.key}/overview`}
+              to={`${search.key}/today`}
               className="block"
               onClick={() => storeRecentSearches(search)}
             >

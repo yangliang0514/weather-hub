@@ -11,7 +11,9 @@ const router = createBrowserRouter([
     element: <App />,
     children: [
       { path: "/", element: <Home /> },
-      { path: "/:city/hourly", element: <div>This is for hourly</div> },
+      { path: "/:cityId/today", element: <div>This is for today</div> },
+      { path: "/:cityId/hour", element: <div>This is for hour</div> },
+      { path: "/:cityId/week", element: <div>This is for week</div> },
     ],
   },
 ]);

@@ -46,7 +46,11 @@ export default function SearchInput() {
         </button>
       </form>
       {displayResults && debouncedQuery && (
-        <SearchResults queryStr={debouncedQuery} />
+        <SearchResults
+          queryStr={debouncedQuery}
+          hideResults={() => setDisplayResults(false)}
+          clearInput={() => setQuertString("")}
+        />
       )}
     </div>
   );
