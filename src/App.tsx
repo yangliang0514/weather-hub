@@ -4,6 +4,7 @@ import { Outlet } from "react-router-dom";
 import NavBar from "./components/NavBar";
 import AppLayout from "./components/AppLayout";
 import ErrorBoundary from "./components/errors/ErrorBoundary";
+import TempUnitProvider from "./context/TempUnitProvider";
 
 const queryClient = new QueryClient({
   defaultOptions: { queries: { staleTime: 60 * 1000, retry: false } },
@@ -11,12 +12,14 @@ const queryClient = new QueryClient({
 export default function App() {
   return (
     <QueryClientProvider client={queryClient}>
-      <AppLayout>
-        <NavBar />
-        <ErrorBoundary fallback={<h1>Something went wrong...</h1>}>
-          <Outlet />
-        </ErrorBoundary>
-      </AppLayout>
+      <TempUnitProvider>
+        <AppLayout>
+          <NavBar />
+          <ErrorBoundary fallback={<h1>Something went wrong...</h1>}>
+            <Outlet />
+          </ErrorBoundary>
+        </AppLayout>
+      </TempUnitProvider>
     </QueryClientProvider>
   );
 }

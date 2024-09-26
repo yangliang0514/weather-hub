@@ -8,3 +8,11 @@ export function storeRecentSearches(info: citiesInfo) {
 
   localStorage.setItem("recentSearches", JSON.stringify(updatedData));
 }
+
+export function getTempUnitLocalStorage() {
+  return localStorage.getItem("tempUnit") || "celsius";
+}
+
+export function setTempUnitLocalStorage(unit: string) {
+  localStorage.setItem("tempUnit", unit);
+}
