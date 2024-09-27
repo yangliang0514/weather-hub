@@ -2,7 +2,7 @@ import {
   getTempUnitLocalStorage,
   setTempUnitLocalStorage,
 } from "@/utils/localStorage";
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 
 interface unitContextValue {
   unit: string;
@@ -18,13 +18,12 @@ export default function TempUnitProvider({
 }) {
   const [tempUnit, setTempUnit] = useState(getTempUnitLocalStorage());
 
-  function setUnit(unit: string) {
-    setTempUnit(unit);
-    setTempUnitLocalStorage(unit);
-  }
+  useEffect(() => {
+    setTempUnitLocalStorage(tempUnit);
+  }, [tempUnit]);
 
   return (
-    <TempUnitContext.Provider value={{ unit: tempUnit, setUnit }}>
+    <TempUnitContext.Provider value={{ unit: tempUnit, setUnit: setTempUnit }}>
       {children}
     </TempUnitContext.Provider>
   );
@@ -32,9 +31,9 @@ export default function TempUnitProvider({
 
 // eslint-disable-next-line react-refresh/only-export-components
 export function useTempUnitContext() {
-  const context = useContext(TempUnitContext)!;
+  const context = useContext(TempUnitContext);
 
-  if (context === undefined) {
+  if (context === null) {
     throw new Error("TempUnitContext was used outside of Provider");
   }
 
