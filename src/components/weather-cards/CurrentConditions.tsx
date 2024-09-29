@@ -17,9 +17,11 @@ export default function CurrentConditions({
   if (isError) return <div>Error: {error.message}</div>;
 
   return (
-    <div className="col-span-2 space-y-4 rounded-lg bg-white p-4 shadow-md">
+    <div className="col-span-2 min-h-64 space-y-4 rounded-lg bg-white p-4 shadow-md">
       {isLoading || !data ? (
-        <LoaderCircle className="mx-auto animate-spin" />
+        <div className="flex h-full w-full items-center justify-center">
+          <LoaderCircle className="h-12 w-12 animate-spin" />
+        </div>
       ) : (
         <>
           <div className="border-b border-gray-200 pb-4">
@@ -43,24 +45,22 @@ export default function CurrentConditions({
               </div>
             </div>
             <div className="w-1/2 divide-y divide-gray-300">
-              <div className="flex justify-between py-2">
+              <div className="flex justify-between py-4">
                 <span>陰涼溫度</span>
                 <TemperatureDisplay temp={data.realFeelTempShade} />
               </div>
-              <div className="flex justify-between py-2">
-                {/* wind */}
+              <div className="flex justify-between py-4">
                 <span>風</span>
                 <span>
                   {data.windDirection} 每小時 {data.windSpeed} 公里
                 </span>
               </div>
-              <div className="flex justify-between py-2">
-                {/* wind gust */}
+              <div className="flex justify-between py-4">
                 <span>陣風</span>
                 <span>每小時 {data.windGustSpeed} 公里</span>
               </div>
             </div>
-          </div>{" "}
+          </div>
         </>
       )}
     </div>

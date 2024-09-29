@@ -18,8 +18,32 @@ export interface CurrentCondition {
   realFeelTemp: number;
   realFeelTempShade: number;
   windDirection: string;
-  windSpeed: string;
-  windGustSpeed: string;
+  windSpeed: number;
+  windGustSpeed: number;
+}
+
+export interface ForcastSummary {
+  headline: string;
+  forcasts: DailyForcast[];
+}
+
+export interface DailyForcast {
+  date: Date;
+  minTemp: number;
+  maxTemp: number;
+  minRealFeelTemp: number;
+  maxRealFeelTemp: number;
+  day: WeatherInfo;
+  night: WeatherInfo;
+}
+
+interface WeatherInfo {
+  icon: number;
+  phrase: string;
+  rainProbability: number;
+  windSpeed: number;
+  windDirection: string;
+  windGustSpeed: number;
 }
 
 export async function fetchCitiesSearch(
@@ -51,8 +75,6 @@ export async function fetchCurrentCondition(
     params: { language: "zh-tw", details: true },
   });
 
-  console.log(result);
-
   return {
     weatherText: result["WeatherText"],
     weatherIcon: result["WeatherIcon"],
@@ -62,5 +84,45 @@ export async function fetchCurrentCondition(
     windDirection: result["Wind"]["Direction"]["Localized"],
     windSpeed: result["Wind"]["Speed"]["Metric"]["Value"],
     windGustSpeed: result["WindGust"]["Speed"]["Metric"]["Value"],
+  };
+}
+
+export async function fetch5DaysDailyForcast(
+  locationKey: string,
+): Promise<ForcastSummary> {
+  const { data: result } = await axios.get(
+    `${domain}/forecasts/v1/daily/5day/${locationKey}`,
+    {
+      params: { language: "zh-tw", details: true, metric: true },
+    },
+  );
+
+  return {
+    headline: result["Headline"]["Text"],
+    forcasts: result["DailyForecasts"].map(
+      (forcast: any): DailyForcast => ({
+        date: new Date(forcast["Date"]),
+        minTemp: forcast["Temperature"]["Minimum"]["Value"],
+        maxTemp: forcast["Temperature"]["Maximum"]["Value"],
+        maxRealFeelTemp: forcast["RealFeelTemperature"]["Minimum"]["Value"],
+        minRealFeelTemp: forcast["RealFeelTemperature"]["Minimum"]["Value"],
+        day: {
+          icon: forcast["Day"]["Icon"],
+          phrase: forcast["Day"]["ShortPhrase"],
+          rainProbability: forcast["Day"]["RainProbability"],
+          windSpeed: forcast["Day"]["Wind"]["Speed"]["Value"],
+          windDirection: forcast["Day"]["Wind"]["Direction"]["Localized"],
+          windGustSpeed: forcast["Day"]["WindGust"]["Speed"]["Value"],
+        },
+        night: {
+          icon: forcast["Night"]["Icon"],
+          phrase: forcast["Night"]["ShortPhrase"],
+          rainProbability: forcast["Night"]["RainProbability"],
+          windSpeed: forcast["Night"]["Wind"]["Speed"]["Value"],
+          windDirection: forcast["Night"]["Wind"]["Direction"]["Localized"],
+          windGustSpeed: forcast["Night"]["WindGust"]["Speed"]["Value"],
+        },
+      }),
+    ),
   };
 }
