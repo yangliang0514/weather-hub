@@ -1,5 +1,6 @@
 import CurrentConditions from "@/components/weather-cards/CurrentConditions";
 import ForcastSummary from "@/components/weather-cards/ForcastSummary";
+import HourlyForcast from "@/components/weather-cards/HourlyForcast";
 import HourlyRainForcast from "@/components/weather-cards/HourlyRainForcast";
 import { Navigate, useParams } from "react-router-dom";
 
@@ -13,6 +14,7 @@ export default function Today() {
       <CurrentConditions locationKey={cityId} />
       <ForcastSummary locationKey={cityId} />
       <HourlyRainForcast locationKey={cityId} />
+      <HourlyForcast locationKey={cityId} />
     </main>
   );
 }
