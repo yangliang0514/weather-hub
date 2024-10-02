@@ -60,14 +60,29 @@ interface HourlyForcast {
   rain: number;
 }
 
+export async function fetchLocation(
+  locationKey: string | undefined,
+): Promise<{ city: string; parentCity: string } | null> {
+  if (!locationKey) return null;
+
+  const { data } = await axios.get(`${domain}/locations/v1/${locationKey}`, {
+    params: { language: "zh-tw" },
+  });
+
+  if (!data) return null;
+
+  return {
+    city: data["LocalizedName"],
+    parentCity: data["AdministrativeArea"]["LocalizedName"],
+  };
+}
+
 export async function fetchCitiesSearch(
   searchText: string,
 ): Promise<citiesInfo[]> {
   const { data: results } = await axios.get(
     `${domain}/locations/v1/cities/search`,
-    {
-      params: { q: searchText, language: "zh-tw" },
-    },
+    { params: { q: searchText, language: "zh-tw" } },
   );
 
   return results.map((result: any) => ({
