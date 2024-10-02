@@ -46,6 +46,20 @@ interface WeatherInfo {
   windGustSpeed: number;
 }
 
+interface HourlyForcast {
+  date: Date;
+  icon: number;
+  temp: number;
+  realFeelTemp: number;
+  rainProbability: number;
+  windDirection: string;
+  windSpeed: number;
+  windGustSpeed: number;
+  humidity: number;
+  visibility: number;
+  rain: number;
+}
+
 export async function fetchCitiesSearch(
   searchText: string,
 ): Promise<citiesInfo[]> {
@@ -92,9 +106,7 @@ export async function fetch5DaysDailyForcast(
 ): Promise<ForcastSummary> {
   const { data: result } = await axios.get(
     `${domain}/forecasts/v1/daily/5day/${locationKey}`,
-    {
-      params: { language: "zh-tw", details: true, metric: true },
-    },
+    { params: { language: "zh-tw", details: true, metric: true } },
   );
 
   return {
@@ -125,4 +137,29 @@ export async function fetch5DaysDailyForcast(
       }),
     ),
   };
+}
+
+export async function fetch12HoursHourlyForcast(
+  locationKey: string,
+): Promise<HourlyForcast[]> {
+  const { data: result } = await axios.get(
+    `${domain}/forecasts/v1/hourly/12hour/${locationKey}`,
+    { params: { language: "zh-tw", details: true, metric: true } },
+  );
+
+  return result.map(
+    (forcast: any): HourlyForcast => ({
+      date: new Date(forcast["DateTime"]),
+      icon: forcast["WeatherIcon"],
+      temp: forcast["Temperature"]["Value"],
+      realFeelTemp: forcast["RealFeelTemperature"]["Value"],
+      windDirection: forcast["Wind"]["Direction"]["Localized"],
+      windSpeed: forcast["Wind"]["Speed"]["Value"],
+      windGustSpeed: forcast["WindGust"]["Speed"]["Value"],
+      rain: forcast["Rain"]["Value"],
+      rainProbability: forcast["RainProbability"],
+      humidity: forcast["RelativeHumidity"],
+      visibility: forcast["Visibility"]["Value"],
+    }),
+  );
 }
