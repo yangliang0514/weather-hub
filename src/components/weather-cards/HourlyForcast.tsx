@@ -10,6 +10,7 @@ import {
 import { Droplets, LoaderCircle } from "lucide-react";
 import WeatherIcon from "@/icons/WeatherIcon";
 import TemperatureDisplay from "./TemperatureDisplay";
+import { formatHour } from "@/utils/helpers";
 
 export default function HourlyForcast({
   locationKey,
@@ -42,7 +43,7 @@ export default function HourlyForcast({
                   className="basis-1/3"
                 >
                   <div className="flex flex-col items-center gap-3">
-                    <span>{formatTime(forcast.date.getHours())}</span>
+                    <span>{formatHour(forcast.date.getHours())}</span>
                     <div>
                       <WeatherIcon
                         iconNum={forcast.icon}
@@ -65,9 +66,4 @@ export default function HourlyForcast({
       )}
     </div>
   );
-}
-
-function formatTime(time: number): string {
-  if (time >= 0 && time <= 11) return `上午 ${time} 時`;
-  return `下午 ${time - 12} 時`;
 }

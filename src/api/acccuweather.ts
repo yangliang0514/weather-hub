@@ -46,9 +46,10 @@ interface WeatherInfo {
   windGustSpeed: number;
 }
 
-interface HourlyForcast {
+export interface HourlyForcast {
   date: Date;
   icon: number;
+  iconText: string;
   temp: number;
   realFeelTemp: number;
   rainProbability: number;
@@ -58,6 +59,9 @@ interface HourlyForcast {
   humidity: number;
   visibility: number;
   rain: number;
+  cloudCover: number;
+  dewPoint: number;
+  UVIndexText: string;
 }
 
 export async function fetchLocation(
@@ -166,6 +170,7 @@ export async function fetch12HoursHourlyForcast(
     (forcast: any): HourlyForcast => ({
       date: new Date(forcast["DateTime"]),
       icon: forcast["WeatherIcon"],
+      iconText: forcast["IconPhrase"],
       temp: forcast["Temperature"]["Value"],
       realFeelTemp: forcast["RealFeelTemperature"]["Value"],
       windDirection: forcast["Wind"]["Direction"]["Localized"],
@@ -175,6 +180,9 @@ export async function fetch12HoursHourlyForcast(
       rainProbability: forcast["RainProbability"],
       humidity: forcast["RelativeHumidity"],
       visibility: forcast["Visibility"]["Value"],
+      cloudCover: forcast["CloudCover"],
+      dewPoint: forcast["DewPoint"]["Value"],
+      UVIndexText: forcast["UVIndexText"],
     }),
   );
 }
