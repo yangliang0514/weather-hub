@@ -25,7 +25,9 @@ export default function NavBar() {
             <Link to="/">
               <Logo />
             </Link>
-            {!isLoading && (
+            {isLoading ? (
+              <span className="block min-w-24"></span>
+            ) : (
               <span>
                 {data?.parentCity}, {data?.city}
               </span>
