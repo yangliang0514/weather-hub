@@ -43,7 +43,8 @@ interface WeatherInfo {
   rainProbability: number;
   windSpeed: number;
   windDirection: string;
-  windGustSpeed: number;
+  cloudCover: number;
+  rain: number;
 }
 
 export interface HourlyForcast {
@@ -135,7 +136,7 @@ export async function fetch5DaysDailyForcast(
         date: new Date(forcast["Date"]),
         minTemp: forcast["Temperature"]["Minimum"]["Value"],
         maxTemp: forcast["Temperature"]["Maximum"]["Value"],
-        maxRealFeelTemp: forcast["RealFeelTemperature"]["Minimum"]["Value"],
+        maxRealFeelTemp: forcast["RealFeelTemperature"]["Maximum"]["Value"],
         minRealFeelTemp: forcast["RealFeelTemperature"]["Minimum"]["Value"],
         day: {
           icon: forcast["Day"]["Icon"],
@@ -143,7 +144,8 @@ export async function fetch5DaysDailyForcast(
           rainProbability: forcast["Day"]["RainProbability"],
           windSpeed: forcast["Day"]["Wind"]["Speed"]["Value"],
           windDirection: forcast["Day"]["Wind"]["Direction"]["Localized"],
-          windGustSpeed: forcast["Day"]["WindGust"]["Speed"]["Value"],
+          cloudCover: forcast["Day"]["CloudCover"],
+          rain: forcast["Day"]["Rain"]["Value"],
         },
         night: {
           icon: forcast["Night"]["Icon"],
@@ -151,7 +153,8 @@ export async function fetch5DaysDailyForcast(
           rainProbability: forcast["Night"]["RainProbability"],
           windSpeed: forcast["Night"]["Wind"]["Speed"]["Value"],
           windDirection: forcast["Night"]["Wind"]["Direction"]["Localized"],
-          windGustSpeed: forcast["Night"]["WindGust"]["Speed"]["Value"],
+          cloudCover: forcast["Night"]["CloudCover"],
+          rain: forcast["Night"]["Rain"]["Value"],
         },
       }),
     ),

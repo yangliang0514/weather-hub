@@ -7,7 +7,7 @@ export default function Tabs() {
   const tabs = [
     { path: `/${cityId}/today`, text: "本日" },
     { path: `/${cityId}/hour`, text: "每小時" },
-    { path: `/${cityId}/week`, text: "本週" },
+    { path: `/${cityId}/five-days`, text: "未來 5 天" },
   ];
 
   return (
