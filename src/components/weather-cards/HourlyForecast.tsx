@@ -12,19 +12,23 @@ import WeatherIcon from "@/icons/WeatherIcon";
 import TemperatureDisplay from "./TemperatureDisplay";
 import { formatHour } from "@/utils/helpers";
 import LoadingCard from "./LoadingCard";
+import ErrorCard from "../errors/ErrorCard";
 
 export default function HourlyForecast({
   locationKey,
 }: {
   locationKey: string;
 }) {
-  const { data, isLoading, isError, error } = useQuery({
+  const { data, isLoading, isError } = useQuery({
     queryKey: ["hourlyForecast", locationKey],
     queryFn: () => fetch12HoursHourlyForecast(locationKey),
   });
 
-  if (isError) return <div>Error: {error.message}</div>;
   if (isLoading || !data) return <LoadingCard className="col-span-1" />;
+
+  if (isError) {
+    return <ErrorCard className="col-span-1" queryKey="hourlyForecast" />;
+  }
 
   return (
     <div className="col-span-1 space-y-6 rounded-lg bg-white p-4 shadow-md">

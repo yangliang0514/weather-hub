@@ -1,4 +1,5 @@
 import { DailyForecast, fetch5DaysDailyForecast } from "@/api/acccuweather";
+import ErrorCard from "@/components/errors/ErrorCard";
 import DailyCondition from "@/components/weather-cards/DailyCondition";
 import LoadingCard from "@/components/weather-cards/LoadingCard";
 import { useQuery } from "@tanstack/react-query";
@@ -29,6 +30,9 @@ export default function FiveDays() {
               error={error}
             />
           ))}
+      {isError && (
+        <ErrorCard className="col-span-3" queryKey="5-day-forecast" />
+      )}
     </main>
   );
 }

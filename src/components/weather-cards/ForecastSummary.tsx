@@ -3,18 +3,21 @@ import WeatherIcon from "@/icons/WeatherIcon";
 import { useQuery } from "@tanstack/react-query";
 import { Droplets } from "lucide-react";
 import LoadingCard from "./LoadingCard";
+import ErrorCard from "../errors/ErrorCard";
 
 export default function ForecastSummary({
   locationKey,
 }: {
   locationKey: string;
 }) {
-  const { data, isLoading, isError, error } = useQuery({
+  const { data, isLoading, isError } = useQuery({
     queryKey: ["5-day-forecast", locationKey],
     queryFn: () => fetch5DaysDailyForecast(locationKey),
   });
 
-  if (isError) return <div>Error: {error.message}</div>;
+  if (isError) {
+    return <ErrorCard className="col-span-1" queryKey="5-day-forecast" />;
+  }
 
   if (isLoading || !data) return <LoadingCard className="col-span-1" />;
 

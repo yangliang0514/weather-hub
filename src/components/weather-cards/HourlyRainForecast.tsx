@@ -9,18 +9,21 @@ import {
 } from "@/components/ui/chart";
 import { Bar, BarChart, CartesianGrid, XAxis } from "recharts";
 import LoadingCard from "./LoadingCard";
+import ErrorCard from "../errors/ErrorCard";
 
 export default function HourlyRainForecast({
   locationKey,
 }: {
   locationKey: string;
 }) {
-  const { data, isLoading, isError, error } = useQuery({
+  const { data, isLoading, isError } = useQuery({
     queryKey: ["hourlyForecast", locationKey],
     queryFn: () => fetch12HoursHourlyForecast(locationKey),
   });
 
-  if (isError) return <div>Error: {error.message}</div>;
+  if (isError) {
+    return <ErrorCard className="col-span-2" queryKey="hourlyForecast" />;
+  }
 
   if (isLoading || !data) return <LoadingCard className="col-span-2" />;
 

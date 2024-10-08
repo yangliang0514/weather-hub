@@ -6,15 +6,9 @@ import { HourlyForecast } from "@/api/acccuweather";
 
 export default function HourlyCondition({
   forecast,
-  isError,
-  error,
 }: {
   forecast: HourlyForecast;
-  isError: boolean;
-  error: Error | null;
 }) {
-  if (isError) return <div>Error: {error?.message}</div>;
-
   return (
     <div className="col-span-3 min-h-64 space-y-4 rounded-lg bg-white p-4 shadow-md">
       <div className="border-b border-gray-200 pb-4">

@@ -3,18 +3,21 @@ import TemperatureDisplay from "./TemperatureDisplay";
 import { useQuery } from "@tanstack/react-query";
 import { fetchCurrentCondition } from "@/api/acccuweather";
 import LoadingCard from "./LoadingCard";
+import ErrorCard from "../errors/ErrorCard";
 
 export default function CurrentConditions({
   locationKey,
 }: {
   locationKey: string;
 }) {
-  const { data, isLoading, isError, error } = useQuery({
+  const { data, isLoading, isError } = useQuery({
     queryKey: ["currentCondition", locationKey],
     queryFn: () => fetchCurrentCondition(locationKey),
   });
 
-  if (isError) return <div>Error: {error.message}</div>;
+  if (isError) {
+    return <ErrorCard className="col-span-2" queryKey="currentCondition" />;
+  }
 
   if (isLoading || !data) return <LoadingCard className="col-span-2" />;
 

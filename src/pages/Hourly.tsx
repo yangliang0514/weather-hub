@@ -1,4 +1,5 @@
 import { fetch12HoursHourlyForecast, HourlyForecast } from "@/api/acccuweather";
+import ErrorCard from "@/components/errors/ErrorCard";
 import HourlyCondition from "@/components/weather-cards/HourlyCondition";
 import LoadingCard from "@/components/weather-cards/LoadingCard";
 import { useQuery } from "@tanstack/react-query";
@@ -7,7 +8,7 @@ import { Navigate, useParams } from "react-router-dom";
 export default function Hourly() {
   const { cityId } = useParams();
 
-  const { data, isLoading, isError, error } = useQuery({
+  const { data, isLoading, isError } = useQuery({
     queryKey: ["hourlyForecast", cityId],
     queryFn: () => fetch12HoursHourlyForecast(cityId!),
   });
@@ -24,10 +25,11 @@ export default function Hourly() {
             <HourlyCondition
               key={forecast.date.toISOString()}
               forecast={forecast}
-              isError={isError}
-              error={error}
             />
           ))}
+      {isError && (
+        <ErrorCard className="col-span-3" queryKey="hourlyForecast" />
+      )}
     </main>
   );
 }
