@@ -1,4 +1,4 @@
-import { fetch12HoursHourlyForcast } from "@/api/acccuweather";
+import { fetch12HoursHourlyForecast } from "@/api/acccuweather";
 import { useQuery } from "@tanstack/react-query";
 
 import {
@@ -10,14 +10,14 @@ import {
 import { Bar, BarChart, CartesianGrid, XAxis } from "recharts";
 import LoadingCard from "./LoadingCard";
 
-export default function HourlyRainForcast({
+export default function HourlyRainForecast({
   locationKey,
 }: {
   locationKey: string;
 }) {
   const { data, isLoading, isError, error } = useQuery({
-    queryKey: ["hourlyForcast", locationKey],
-    queryFn: () => fetch12HoursHourlyForcast(locationKey),
+    queryKey: ["hourlyForecast", locationKey],
+    queryFn: () => fetch12HoursHourlyForecast(locationKey),
   });
 
   if (isError) return <div>Error: {error.message}</div>;
@@ -31,9 +31,9 @@ export default function HourlyRainForcast({
     },
   } satisfies ChartConfig;
 
-  const chartData = data?.map((forcast) => ({
-    hour: `${forcast.date.getHours()}:00`,
-    rain: forcast.rain,
+  const chartData = data?.map((forecast) => ({
+    hour: `${forecast.date.getHours()}:00`,
+    rain: forecast.rain,
   }));
 
   return (

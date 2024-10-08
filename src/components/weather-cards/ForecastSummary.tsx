@@ -1,17 +1,17 @@
-import { fetch5DaysDailyForcast } from "@/api/acccuweather";
+import { fetch5DaysDailyForecast } from "@/api/acccuweather";
 import WeatherIcon from "@/icons/WeatherIcon";
 import { useQuery } from "@tanstack/react-query";
 import { Droplets } from "lucide-react";
 import LoadingCard from "./LoadingCard";
 
-export default function ForcastSummary({
+export default function ForecastSummary({
   locationKey,
 }: {
   locationKey: string;
 }) {
   const { data, isLoading, isError, error } = useQuery({
-    queryKey: ["5-day-forcast", locationKey],
-    queryFn: () => fetch5DaysDailyForcast(locationKey),
+    queryKey: ["5-day-forecast", locationKey],
+    queryFn: () => fetch5DaysDailyForecast(locationKey),
   });
 
   if (isError) return <div>Error: {error.message}</div>;
@@ -28,28 +28,28 @@ export default function ForcastSummary({
           <span>白天</span>
           <div className="space-x-3">
             <WeatherIcon
-              iconNum={data.forcasts[0].day.icon}
+              iconNum={data.forecasts[0].day.icon}
               className="inline h-10 w-10"
             />
-            <span>{data.forcasts[0].day.phrase}</span>
+            <span>{data.forecasts[0].day.phrase}</span>
           </div>
           <div className="space-x-1">
             <Droplets className="inline" />
-            <span>{data.forcasts[0].day.rainProbability} %</span>
+            <span>{data.forecasts[0].day.rainProbability} %</span>
           </div>
         </div>
         <div className="flex items-center justify-between px-3 py-5">
           <span>晚上</span>
           <div className="space-x-3">
             <WeatherIcon
-              iconNum={data.forcasts[0].night.icon}
+              iconNum={data.forecasts[0].night.icon}
               className="inline h-10 w-10"
             />
-            <span>{data.forcasts[0].night.phrase}</span>
+            <span>{data.forecasts[0].night.phrase}</span>
           </div>
           <div className="space-x-1">
             <Droplets className="inline" />
-            <span>{data.forcasts[0].night.rainProbability} %</span>
+            <span>{data.forecasts[0].night.rainProbability} %</span>
           </div>
         </div>
       </div>

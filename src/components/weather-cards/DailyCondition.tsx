@@ -1,16 +1,16 @@
-import { DailyForcast } from "@/api/acccuweather";
+import { DailyForecast } from "@/api/acccuweather";
 import { LoaderCircle, ThermometerIcon } from "lucide-react";
 import TemperatureDisplay from "./TemperatureDisplay";
 import { formatDate } from "@/utils/helpers";
 import WeatherIcon from "@/icons/WeatherIcon";
 
 export default function DailyCondition({
-  forcast,
+  forecast,
   isLoading,
   isError,
   error,
 }: {
-  forcast: DailyForcast;
+  forecast: DailyForecast;
   isLoading: boolean;
   isError: boolean;
   error: Error | null;
@@ -19,7 +19,7 @@ export default function DailyCondition({
 
   return (
     <div className="col-span-3 min-h-64 space-y-4 rounded-lg bg-white p-4 shadow-md">
-      {isLoading || !forcast ? (
+      {isLoading || !forecast ? (
         <div className="flex h-full w-full items-center justify-center">
           <LoaderCircle className="h-12 w-12 animate-spin" />
         </div>
@@ -27,7 +27,7 @@ export default function DailyCondition({
         <>
           <div className="border-b border-gray-200 pb-4">
             <span className="text-sm text-gray-600">
-              {formatDate(forcast.date)}
+              {formatDate(forecast.date)}
             </span>
           </div>
           <div className="px-1 pt-3">
@@ -36,21 +36,21 @@ export default function DailyCondition({
                 <div className="space-y-1">
                   <TemperatureDisplay
                     className="text-3xl"
-                    temp={forcast.maxTemp}
+                    temp={forecast.maxTemp}
                   />
                 </div>
                 <div className="space-y-1">
                   <TemperatureDisplay
                     className="text-xl"
-                    temp={forcast.minTemp}
+                    temp={forecast.minTemp}
                   />
                 </div>
               </div>
               <div className="space-y-3">
                 <div>
                   <ThermometerIcon className="inline h-5 w-5" /> 體感溫度{" "}
-                  <TemperatureDisplay temp={forcast.minRealFeelTemp} /> ~{" "}
-                  <TemperatureDisplay temp={forcast.maxRealFeelTemp} />
+                  <TemperatureDisplay temp={forecast.minRealFeelTemp} /> ~{" "}
+                  <TemperatureDisplay temp={forecast.maxRealFeelTemp} />
                 </div>
               </div>
             </div>
@@ -59,56 +59,59 @@ export default function DailyCondition({
             <div className="w-1/2">
               <div className="flex items-center gap-1">
                 <span>白天 - </span>{" "}
-                <WeatherIcon iconNum={forcast.day.icon} className="h-5 w-5" />
-                <span>{forcast.day.phrase}</span>
+                <WeatherIcon iconNum={forecast.day.icon} className="h-5 w-5" />
+                <span>{forecast.day.phrase}</span>
               </div>
               <div className="divide-y divide-gray-300 px-1">
                 <div className="flex justify-between py-4">
                   <span>風</span>
                   <span>
-                    {forcast.day.windDirection} 每小時 {forcast.day.windSpeed}{" "}
+                    {forecast.day.windDirection} 每小時 {forecast.day.windSpeed}{" "}
                     公里
                   </span>
                 </div>
                 <div className="flex justify-between py-4">
                   <span>降雨機率</span>
-                  <span> {forcast.day.rainProbability} %</span>
+                  <span> {forecast.day.rainProbability} %</span>
                 </div>
                 <div className="flex justify-between py-4">
                   <span>雲量</span>
-                  <span> {forcast.day.cloudCover} %</span>
+                  <span> {forecast.day.cloudCover} %</span>
                 </div>
                 <div className="flex justify-between py-4">
                   <span>雨量</span>
-                  <span>{forcast.day.rain} mm</span>
+                  <span>{forecast.day.rain} mm</span>
                 </div>
               </div>
             </div>
             <div className="w-1/2">
               <div className="flex items-center gap-1">
                 <span>夜晚 - </span>{" "}
-                <WeatherIcon iconNum={forcast.night.icon} className="h-5 w-5" />
-                <span>{forcast.night.phrase}</span>
+                <WeatherIcon
+                  iconNum={forecast.night.icon}
+                  className="h-5 w-5"
+                />
+                <span>{forecast.night.phrase}</span>
               </div>
               <div className="divide-y divide-gray-300 px-1">
                 <div className="flex justify-between py-4">
                   <span>風</span>
                   <span>
-                    {forcast.night.windDirection} 每小時{" "}
-                    {forcast.night.windSpeed} 公里
+                    {forecast.night.windDirection} 每小時{" "}
+                    {forecast.night.windSpeed} 公里
                   </span>
                 </div>
                 <div className="flex justify-between py-4">
                   <span>降雨機率</span>
-                  <span> {forcast.night.rainProbability} %</span>
+                  <span> {forecast.night.rainProbability} %</span>
                 </div>
                 <div className="flex justify-between py-4">
                   <span>雲量</span>
-                  <span> {forcast.night.cloudCover} %</span>
+                  <span> {forecast.night.cloudCover} %</span>
                 </div>
                 <div className="flex justify-between py-4">
                   <span>雨量</span>
-                  <span>{forcast.night.rain} mm</span>
+                  <span>{forecast.night.rain} mm</span>
                 </div>
               </div>
             </div>

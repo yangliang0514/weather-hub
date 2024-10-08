@@ -22,12 +22,12 @@ export interface CurrentCondition {
   windGustSpeed: number;
 }
 
-export interface ForcastSummary {
+export interface ForecastSummary {
   headline: string;
-  forcasts: DailyForcast[];
+  forecasts: DailyForecast[];
 }
 
-export interface DailyForcast {
+export interface DailyForecast {
   date: Date;
   minTemp: number;
   maxTemp: number;
@@ -47,7 +47,7 @@ interface WeatherInfo {
   rain: number;
 }
 
-export interface HourlyForcast {
+export interface HourlyForecast {
   date: Date;
   icon: number;
   iconText: string;
@@ -121,9 +121,9 @@ export async function fetchCurrentCondition(
   };
 }
 
-export async function fetch5DaysDailyForcast(
+export async function fetch5DaysDailyForecast(
   locationKey: string,
-): Promise<ForcastSummary> {
+): Promise<ForecastSummary> {
   const { data: result } = await axios.get(
     `${domain}/forecasts/v1/daily/5day/${locationKey}`,
     { params: { language: "zh-tw", details: true, metric: true } },
@@ -131,61 +131,61 @@ export async function fetch5DaysDailyForcast(
 
   return {
     headline: result["Headline"]["Text"],
-    forcasts: result["DailyForecasts"].map(
-      (forcast: any): DailyForcast => ({
-        date: new Date(forcast["Date"]),
-        minTemp: forcast["Temperature"]["Minimum"]["Value"],
-        maxTemp: forcast["Temperature"]["Maximum"]["Value"],
-        maxRealFeelTemp: forcast["RealFeelTemperature"]["Maximum"]["Value"],
-        minRealFeelTemp: forcast["RealFeelTemperature"]["Minimum"]["Value"],
+    forecasts: result["DailyForecasts"].map(
+      (forecast: any): DailyForecast => ({
+        date: new Date(forecast["Date"]),
+        minTemp: forecast["Temperature"]["Minimum"]["Value"],
+        maxTemp: forecast["Temperature"]["Maximum"]["Value"],
+        maxRealFeelTemp: forecast["RealFeelTemperature"]["Maximum"]["Value"],
+        minRealFeelTemp: forecast["RealFeelTemperature"]["Minimum"]["Value"],
         day: {
-          icon: forcast["Day"]["Icon"],
-          phrase: forcast["Day"]["ShortPhrase"],
-          rainProbability: forcast["Day"]["RainProbability"],
-          windSpeed: forcast["Day"]["Wind"]["Speed"]["Value"],
-          windDirection: forcast["Day"]["Wind"]["Direction"]["Localized"],
-          cloudCover: forcast["Day"]["CloudCover"],
-          rain: forcast["Day"]["Rain"]["Value"],
+          icon: forecast["Day"]["Icon"],
+          phrase: forecast["Day"]["ShortPhrase"],
+          rainProbability: forecast["Day"]["RainProbability"],
+          windSpeed: forecast["Day"]["Wind"]["Speed"]["Value"],
+          windDirection: forecast["Day"]["Wind"]["Direction"]["Localized"],
+          cloudCover: forecast["Day"]["CloudCover"],
+          rain: forecast["Day"]["Rain"]["Value"],
         },
         night: {
-          icon: forcast["Night"]["Icon"],
-          phrase: forcast["Night"]["ShortPhrase"],
-          rainProbability: forcast["Night"]["RainProbability"],
-          windSpeed: forcast["Night"]["Wind"]["Speed"]["Value"],
-          windDirection: forcast["Night"]["Wind"]["Direction"]["Localized"],
-          cloudCover: forcast["Night"]["CloudCover"],
-          rain: forcast["Night"]["Rain"]["Value"],
+          icon: forecast["Night"]["Icon"],
+          phrase: forecast["Night"]["ShortPhrase"],
+          rainProbability: forecast["Night"]["RainProbability"],
+          windSpeed: forecast["Night"]["Wind"]["Speed"]["Value"],
+          windDirection: forecast["Night"]["Wind"]["Direction"]["Localized"],
+          cloudCover: forecast["Night"]["CloudCover"],
+          rain: forecast["Night"]["Rain"]["Value"],
         },
       }),
     ),
   };
 }
 
-export async function fetch12HoursHourlyForcast(
+export async function fetch12HoursHourlyForecast(
   locationKey: string,
-): Promise<HourlyForcast[]> {
+): Promise<HourlyForecast[]> {
   const { data: result } = await axios.get(
     `${domain}/forecasts/v1/hourly/12hour/${locationKey}`,
     { params: { language: "zh-tw", details: true, metric: true } },
   );
 
   return result.map(
-    (forcast: any): HourlyForcast => ({
-      date: new Date(forcast["DateTime"]),
-      icon: forcast["WeatherIcon"],
-      iconText: forcast["IconPhrase"],
-      temp: forcast["Temperature"]["Value"],
-      realFeelTemp: forcast["RealFeelTemperature"]["Value"],
-      windDirection: forcast["Wind"]["Direction"]["Localized"],
-      windSpeed: forcast["Wind"]["Speed"]["Value"],
-      windGustSpeed: forcast["WindGust"]["Speed"]["Value"],
-      rain: forcast["Rain"]["Value"],
-      rainProbability: forcast["RainProbability"],
-      humidity: forcast["RelativeHumidity"],
-      visibility: forcast["Visibility"]["Value"],
-      cloudCover: forcast["CloudCover"],
-      dewPoint: forcast["DewPoint"]["Value"],
-      UVIndexText: forcast["UVIndexText"],
+    (forecast: any): HourlyForecast => ({
+      date: new Date(forecast["DateTime"]),
+      icon: forecast["WeatherIcon"],
+      iconText: forecast["IconPhrase"],
+      temp: forecast["Temperature"]["Value"],
+      realFeelTemp: forecast["RealFeelTemperature"]["Value"],
+      windDirection: forecast["Wind"]["Direction"]["Localized"],
+      windSpeed: forecast["Wind"]["Speed"]["Value"],
+      windGustSpeed: forecast["WindGust"]["Speed"]["Value"],
+      rain: forecast["Rain"]["Value"],
+      rainProbability: forecast["RainProbability"],
+      humidity: forecast["RelativeHumidity"],
+      visibility: forecast["Visibility"]["Value"],
+      cloudCover: forecast["CloudCover"],
+      dewPoint: forecast["DewPoint"]["Value"],
+      UVIndexText: forecast["UVIndexText"],
     }),
   );
 }

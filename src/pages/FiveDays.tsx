@@ -1,4 +1,4 @@
-import { DailyForcast, fetch5DaysDailyForcast } from "@/api/acccuweather";
+import { DailyForecast, fetch5DaysDailyForecast } from "@/api/acccuweather";
 import DailyCondition from "@/components/weather-cards/DailyCondition";
 import LoadingCard from "@/components/weather-cards/LoadingCard";
 import { useQuery } from "@tanstack/react-query";
@@ -8,8 +8,8 @@ export default function FiveDays() {
   const { cityId } = useParams();
 
   const { data, isLoading, isError, error } = useQuery({
-    queryKey: ["5-day-forcast", cityId],
-    queryFn: () => fetch5DaysDailyForcast(cityId!),
+    queryKey: ["5-day-forecast", cityId],
+    queryFn: () => fetch5DaysDailyForecast(cityId!),
   });
 
   if (!cityId) return <Navigate to="/" replace={true} />;
@@ -20,10 +20,10 @@ export default function FiveDays() {
         ? Array.from({ length: 5 }, (_, i) => (
             <LoadingCard key={i} className="col-span-3 min-h-96" />
           ))
-        : data?.forcasts.map((forcast: DailyForcast) => (
+        : data?.forecasts.map((forecast: DailyForecast) => (
             <DailyCondition
-              key={forcast.date.toISOString()}
-              forcast={forcast}
+              key={forecast.date.toISOString()}
+              forecast={forecast}
               isLoading={isLoading}
               isError={isError}
               error={error}

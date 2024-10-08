@@ -1,4 +1,4 @@
-import { fetch12HoursHourlyForcast } from "@/api/acccuweather";
+import { fetch12HoursHourlyForecast } from "@/api/acccuweather";
 import { useQuery } from "@tanstack/react-query";
 import {
   Carousel,
@@ -13,14 +13,14 @@ import TemperatureDisplay from "./TemperatureDisplay";
 import { formatHour } from "@/utils/helpers";
 import LoadingCard from "./LoadingCard";
 
-export default function HourlyForcast({
+export default function HourlyForecast({
   locationKey,
 }: {
   locationKey: string;
 }) {
   const { data, isLoading, isError, error } = useQuery({
-    queryKey: ["hourlyForcast", locationKey],
-    queryFn: () => fetch12HoursHourlyForcast(locationKey),
+    queryKey: ["hourlyForecast", locationKey],
+    queryFn: () => fetch12HoursHourlyForecast(locationKey),
   });
 
   if (isError) return <div>Error: {error.message}</div>;
@@ -33,20 +33,20 @@ export default function HourlyForcast({
       </div>
       <Carousel className="mx-3">
         <CarouselContent>
-          {data.map((forcast) => (
+          {data.map((forecast) => (
             <CarouselItem
-              key={forcast.date.toISOString()}
+              key={forecast.date.toISOString()}
               className="basis-1/3"
             >
               <div className="flex flex-col items-center gap-3">
-                <span>{formatHour(forcast.date.getHours())}</span>
+                <span>{formatHour(forecast.date.getHours())}</span>
                 <div>
-                  <WeatherIcon iconNum={forcast.icon} className="h-10 w-10" />
-                  <TemperatureDisplay temp={forcast.temp} />
+                  <WeatherIcon iconNum={forecast.icon} className="h-10 w-10" />
+                  <TemperatureDisplay temp={forecast.temp} />
                 </div>
                 <div className="flex items-center gap-1">
                   <Droplets className="h-5 w-5" />
-                  <span>{forcast.rainProbability} %</span>
+                  <span>{forecast.rainProbability} %</span>
                 </div>
               </div>
             </CarouselItem>
