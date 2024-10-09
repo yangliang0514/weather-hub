@@ -27,30 +27,30 @@ export default function ForecastSummary({
         <span className="text-sm text-gray-600">未來一天</span>
       </div>
       <div className="flex flex-col divide-y divide-gray-300">
-        <div className="flex items-center justify-between px-3 py-5">
+        <div className="flex items-center justify-between gap-2 px-3 py-5">
           <span>白天</span>
-          <div className="space-x-3">
+          <div className="flex flex-wrap items-center gap-3">
             <WeatherIcon
               iconNum={data.forecasts[0].day.icon}
               className="inline h-10 w-10"
             />
             <span>{data.forecasts[0].day.phrase}</span>
           </div>
-          <div className="space-x-1">
+          <div className="min-w-max space-x-1">
             <Droplets className="inline" />
             <span>{data.forecasts[0].day.rainProbability} %</span>
           </div>
         </div>
         <div className="flex items-center justify-between px-3 py-5">
           <span>晚上</span>
-          <div className="space-x-3">
+          <div className="flex flex-wrap items-center gap-3">
             <WeatherIcon
               iconNum={data.forecasts[0].night.icon}
               className="inline h-10 w-10"
             />
             <span>{data.forecasts[0].night.phrase}</span>
           </div>
-          <div className="space-x-1">
+          <div className="min-w-max space-x-1">
             <Droplets className="inline" />
             <span>{data.forecasts[0].night.rainProbability} %</span>
           </div>

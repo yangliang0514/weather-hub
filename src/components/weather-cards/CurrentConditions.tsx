@@ -26,7 +26,7 @@ export default function CurrentConditions({
       <div className="border-b border-gray-200 pb-4">
         <span className="text-sm text-gray-600">目前天氣</span>
       </div>
-      <div className="flex justify-between pt-3">
+      <div className="flex flex-col justify-between gap-3 pt-3 sm:flex-row">
         <div className="space-y-2">
           <div className="flex items-center gap-3">
             <WeatherIcon iconNum={data.weatherIcon} className="h-24 w-24" />
@@ -40,7 +40,7 @@ export default function CurrentConditions({
             </div>
           </div>
         </div>
-        <div className="w-1/2 divide-y divide-gray-300">
+        <div className="divide-y divide-gray-300 sm:w-1/2">
           <div className="flex justify-between py-4">
             <span>陰涼溫度</span>
             <TemperatureDisplay temp={data.realFeelTempShade} />

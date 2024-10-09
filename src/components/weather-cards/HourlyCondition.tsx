@@ -17,7 +17,7 @@ export default function HourlyCondition({
         </span>
       </div>
       <div className="px-5 pt-3">
-        <div className="flex items-start justify-between">
+        <div className="flex flex-wrap items-center justify-between gap-5">
           <div className="flex items-end gap-3">
             <WeatherIcon iconNum={forecast.icon} className="h-20 w-20" />
             <div className="space-y-1">
@@ -37,8 +37,8 @@ export default function HourlyCondition({
           </div>
         </div>
       </div>
-      <div className="flex justify-between gap-8">
-        <div className="w-1/2 divide-y divide-gray-300">
+      <div className="justify-between gap-8 divide-y divide-gray-300 sm:flex sm:divide-y-0">
+        <div className="divide-y divide-gray-300 sm:w-1/2">
           <div className="flex justify-between py-4">
             <span>風</span>
             <span>
@@ -58,7 +58,7 @@ export default function HourlyCondition({
             <span>{forecast.rain} mm</span>
           </div>
         </div>
-        <div className="w-1/2 divide-y divide-gray-300">
+        <div className="divide-y divide-gray-300 sm:w-1/2">
           <div className="flex justify-between py-4">
             <span>陣風</span>
             <span>每小時 {forecast.windGustSpeed} 公里</span>

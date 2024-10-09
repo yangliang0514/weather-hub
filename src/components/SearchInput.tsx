@@ -42,7 +42,7 @@ export default function SearchInput() {
           type="submit"
           className="absolute right-3 top-2 hover:opacity-80"
         >
-          <MagnifyingGlass />
+          <MagnifyingGlass className="hidden sm:inline" />
         </button>
       </form>
       {displayResults && debouncedQuery && (

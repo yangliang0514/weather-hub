@@ -16,7 +16,7 @@ export default function RecentSearches() {
   return (
     <div className="space-y-3">
       <h3>最近搜尋</h3>
-      <div className="grid grid-cols-3 gap-3">
+      <div className="grid grid-cols-1 gap-3 md:grid-cols-3">
         {searches.map((search) => {
           return (
             <Link

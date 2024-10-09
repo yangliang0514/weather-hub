@@ -31,7 +31,7 @@ export default function DailyCondition({
             </span>
           </div>
           <div className="px-1 pt-3">
-            <div className="flex items-start justify-between">
+            <div className="flex flex-col items-start justify-between gap-3 sm:flex-row">
               <div className="flex items-end gap-3">
                 <div className="space-y-1">
                   <TemperatureDisplay
@@ -48,16 +48,17 @@ export default function DailyCondition({
               </div>
               <div className="space-y-3">
                 <div>
-                  <ThermometerIcon className="inline h-5 w-5" /> 體感溫度{" "}
+                  <ThermometerIcon className="hidden h-5 w-5 sm:inline" />{" "}
+                  體感溫度{" "}
                   <TemperatureDisplay temp={forecast.minRealFeelTemp} /> ~{" "}
                   <TemperatureDisplay temp={forecast.maxRealFeelTemp} />
                 </div>
               </div>
             </div>
           </div>
-          <div className="flex justify-between gap-8 px-1 pt-3">
-            <div className="w-1/2">
-              <div className="flex items-center gap-1">
+          <div className="flex flex-col justify-between divide-y divide-gray-300 sm:flex-row sm:gap-8 sm:divide-y-0">
+            <div className="sm:w-1/2">
+              <div className="flex items-center gap-1 pt-3">
                 <span>白天 - </span>{" "}
                 <WeatherIcon iconNum={forecast.day.icon} className="h-5 w-5" />
                 <span>{forecast.day.phrase}</span>
@@ -84,8 +85,8 @@ export default function DailyCondition({
                 </div>
               </div>
             </div>
-            <div className="w-1/2">
-              <div className="flex items-center gap-1">
+            <div className="sm:w-1/2">
+              <div className="mt-5 flex items-center gap-1 pt-3 sm:mt-0">
                 <span>夜晚 - </span>{" "}
                 <WeatherIcon
                   iconNum={forecast.night.icon}
