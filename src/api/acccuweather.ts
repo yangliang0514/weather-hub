@@ -65,6 +65,18 @@ export interface HourlyForecast {
   UVIndexText: string;
 }
 
+export async function fetchLocationKeyGeo(
+  latitude: number,
+  longitude: number,
+): Promise<string> {
+  const { data } = await axios.get(
+    `${domain}/locations/v1/cities/geoposition/search`,
+    { params: { language: "zh-tw", q: `${latitude},${longitude}` } },
+  );
+
+  return data["Key"];
+}
+
 export async function fetchLocation(
   locationKey: string | undefined,
 ): Promise<{ city: string; parentCity: string } | null> {

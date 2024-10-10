@@ -45,7 +45,7 @@ export default function SearchInput() {
           <MagnifyingGlass className="hidden sm:inline" />
         </button>
       </form>
-      {displayResults && debouncedQuery && (
+      {displayResults && (
         <SearchResults
           queryStr={debouncedQuery}
           hideResults={() => setDisplayResults(false)}
