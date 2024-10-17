@@ -28,7 +28,7 @@ export default function Logo() {
         <line className="cls-2" x1="51.09" x2="46.85" y1="51.09" y2="46.85" />
         <line className="cls-2" x1="17.15" x2="12.91" y1="17.15" y2="12.91" />
       </svg>
-      <span className="text-3xl">WeatherHub</span>
+      <span className="text-3xl">WeatherApp</span>
     </div>
   );
 }
